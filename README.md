@@ -1,99 +1,92 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+```markdown
+# Proyecto de Domótica - Monitoreo de Clima con NestJS + MongoDB
 
-## Description
+Este proyecto permite monitorear la temperatura y humedad de un espacio en tiempo real, guardar los datos en MongoDB, y controlar remotamente dispositivos como ventiladores o aires acondicionados desde una aplicación móvil (React Native o web).
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Installation
+## Tecnologías utilizadas
+
+- **NestJS** (framework backend)
+- **MongoDB** (base de datos NoSQL)
+- **Mongoose** (ODM para MongoDB en NestJS)
+- **ESP32** (dispositivo que envía datos desde sensor DHT22)
+- **React Native** (interfaz de usuario móvil)
+- **HTTPClient / WiFiClient** (para envío desde ESP32)
+
+---
+
+## Estructura actual
+```
+
+src/
+├── clima/
+│ ├── clima.module.ts
+│ ├── clima.controller.ts
+│ ├── clima.service.ts
+│ ├── dto/
+│ │ └── create-clima.dto.ts
+│ └── schemas/
+│ └── clima.schema.ts
+
+````
+
+---
+
+## Instalación del backend
+
+1. Clona este repositorio:
+```bash
+git clone <url-del-nuevo-repo>
+cd nestjs-clima-mongoose
+````
+
+2. Instala dependencias:
 
 ```bash
-$ pnpm install
+npm install
 ```
 
-## Running the app
+3. Crea un archivo `.env` en la raíz con tu cadena de conexión:
+
+```env
+MONGODB_URI=mongodb://localhost:27017/domotica
+# o MongoDB Atlas:
+# MONGODB_URI=mongodb+srv://usuario:password@cluster.mongodb.net/domotica
+```
+
+4. Inicia el servidor:
 
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+npm run start:dev
 ```
 
+---
 
-### Extra: Tener Nest CLI instalado
+## Endpoints disponibles
 
+- `POST /clima`: recibe datos `{ temperatura, humedad, ubicacion }`
+- `GET /clima/ultima`: obtiene la última lectura registrada
+- `GET /clima/historial`: obtiene las 100 lecturas más recientes
 
-```
-npm i -g @nestjs/cli
-```
+---
 
-## Ejecutar en desarrollo
+## Seguridad y buenas prácticas
 
-1. Clonar repositorio
-```
-  git clone https://github.com/KevinMondragonDev/backendSustentabilidad.git
-```
+- Usa variables de entorno (`.env`) para proteger tu URI de MongoDB.
+- Asegúrate de añadir `.env` al archivo `.gitignore`.
 
+---
 
-2. Dentro del directorio, instalamos las dependencias
+## Próximos módulos sugeridos
 
-```
-pnpm install
-```
+- `control/`: encendido/apagado remoto de ventiladores vía relé.
+- `alertas/`: gestión de alertas por sobretemperatura.
 
+---
 
-3. Levantar la base de datos con el proyecto en Docker (Dockerizar)
+## Autor
 
-```
-docker-compose up -d
-```
-
-
-
-## Este Proyecto utiliza un __.env__
-
-```
-JWT_SECRET='Secreto'
-PORT=3002
-DB_PASSWORD=root
-DB_NAME=SustabilidadDB
-DB_HOST=localhost
-DB_PORT=5434
-DB_USERNAME=postgres
-
-
-```
-
-
-
-## Manera de hacer despliegue 
-
-1. Crear el archivo ``` .env ```
-2. Llenar las variables de entorno de prod
-3. Crear la imagen 
-```
-
- docker-compose -f docker-compose.prod.yaml --env-file .env up --build
-
-```
-
-4. recargar la imagen si ya la tenias 
-```
- docker-compose -f docker-compose.prod.yaml --env-file .env.prod up -d
-```
-
-* Nest
-
-
-## STACK Utilizado
-
-
-* Posgrest
-* Docker / Docker Compose
-* Nest
+MIGUEL ANGEL GARCIA ESPINOSA
+OMAR TORRIJOS PEREZ
+EMILIO MORENO ALMANZA
